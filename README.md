@@ -77,7 +77,7 @@ labels = pd.get_dummies(labels).values
 
 ## Images Pre Processing 
 
-Out of the 3000 images, 13 are not shaped as `600*600*3` : 10 are 600*601, 1 is 600*654, 1 is 600*664, 1 is 986*600.
+Out of the 3000 images, 13 are not shaped as `600*600*3` : 10 are `600*601*3`, 1 is `600*654*3`, 1 is `600*664*3`, 1 is `986*600*3`.
 For simplicity, all the images are reshaped to the same shape.
 However the shape was set to `224*224*3` and not `600*600*3` because:
 - `224*224*3` is the image shape adapted to the model that will be used
@@ -91,7 +91,7 @@ for i in range(len(images)):
         images[i] = cv2.resize(images[i],(img_dim, img_dim))
 ```
 
-Once the images reshaped, their values were normalized between O and 1:
+Once the images reshaped, their values were normalized between 0 and 1:
 
 ```python
 images = np.array(images, dtype="float") / 255.0  # not enough RAM with colab
