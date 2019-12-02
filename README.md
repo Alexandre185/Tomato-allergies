@@ -12,7 +12,6 @@ The 3 files/directories needed to run the code are:
 ### Packages
 
 ```python
-# Packages 
 import json
 import os
 import cv2
@@ -24,7 +23,7 @@ import pandas as pd
 
 The file Annotations_with_tomato.txt was made from the file label_mapping.csv. It consist in the list of the ID of the 76 elements that may contain tomatoes that I have identified in the label_mapping list.
 
-## Code
+## Labels creation
 
 First the path of the needed files need to be set and the `img_annotations.json` and `Annotations_with_tomato.txt` must be opened as follows:
 
@@ -43,11 +42,11 @@ annotations_tomato = f.read()
 annotations_tomato = annotations_tomato.split('\n')
 ```
 
-```python
-# Creation of the labels dictionnary {image_ID : 0 or 1}
-# 0 if the image does not have any tomato annotation
-# 1 if the image contain at least 1 annoation with tomato
+The labels were created as follows:
+    - 0 if the image does not have any tomato annotation (if none of its bounding boxes annotated ID can be found in the `Annotations_with_tomato.txt` list)
+    - 1 if the image contain at least 1 annoation with tomato (if at least one bounding box annotated ID can be found in the `Annotations_with_tomato.txt` list)
 
+```python
 labels_dict =  {}
 for i in range(len(annotations)): 
     labels_dict[list(annotations.items())[i][0]] = 0
@@ -55,10 +54,12 @@ for i in range(len(annotations)):
         if bbox['id'] in annotations_tomato:
             labels_dict[list(annotations.items())[i][0]] = 1
 ```
+This resulted in having:
+    - 2121 images labeled as 0: without any tomato trace
+    - 879 images labeled as 1: that main contain tomato traces
 
+The images and the labels were then put in corresponding lists of length 3000:
 ```python
-# Creation of the images and labels arrays
-
 images = []
 labels = []
 
@@ -66,6 +67,13 @@ for ID in os.listdir(path_to_images):
     images.append(cv2.imread(path_to_images+ID))
     labels.append(labels_dict[ID])
 ```
+The labels were one hot encoded for easier use:
+```python
+labels = np.array(labels)
+labels = pd.get_dummies(labels).values
+```
+
+## Images Pre Processing 
 
 ```python
 img_dim = 299 # Dimension we want to resize the image to (image is 600*600 initially)
@@ -77,10 +85,6 @@ for i in range(len(images)):
 
 ```python
 images = np.array(images, dtype="float") / 255.0  # not enough RAM with colab
-labels = np.array(labels)
+
 ```
-```python
-# One hot encoding of the labels
-labels = pd.get_dummies(labels).values
-```
-```
+
