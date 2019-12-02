@@ -54,7 +54,7 @@ for i in range(len(annotations)):
         if bbox['id'] in annotations_tomato:
             labels_dict[list(annotations.items())[i][0]] = 1
 ```
-This resulted in having:
+This resulted in having: \\
     - 2121 images labeled as 0: without any tomato trace
     - 879 images labeled as 1: that main contain tomato traces
 
