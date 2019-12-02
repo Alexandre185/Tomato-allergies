@@ -1,15 +1,15 @@
 # Tomato-allergies
 
-The file Annotations_with_tomato.txt was made from the file label_mapping.csv. It consist in the list of the ID of the 76 elements that may contain tomatoes that I have identified in the label_mapping list.
+## Requirements
 
-```python
-# Path for the 3 needed files or directories
+### Files
 
-path_to_images = '/content/assignment_imgs/' # Directory with the 3000 images (unzipped)
-path_to_annotations = '/content/drive/My Drive/img_annotations.json' # json annotations file
-# Text file manually created from the excel table with all the bounding boxes IDs of aliments that may contain tomatoes
-path_to_annotations_tomato = '/content/Annotations_with_tomato.txt'
-```
+The 3 files/directories needed to run the code are:
+- the directory `assignment_imgs` with the 3000 images
+- the file  `img_annotations.json` with all the bounding boxes for the images
+- the file `Annotations_with_tomato.txt` with the ID of the bounding boxes that contain or may contain tomato.
+
+### Packages
 
 ```python
 # Packages 
@@ -19,7 +19,20 @@ import cv2
 import numpy as np
 import pandas as pd
 ```
+
+## Annotations_with_tomato.txt file
+
+The file Annotations_with_tomato.txt was made from the file label_mapping.csv. It consist in the list of the ID of the 76 elements that may contain tomatoes that I have identified in the label_mapping list.
+
+## Code
+
+First the path of the needed files need to be set and the `img_annotations.json` and `Annotations_with_tomato.txt` must be opened as follows:
+
 ```python
+path_to_images = '/.../assignment_imgs/' # (unzipped)
+path_to_annotations = '/.../img_annotations.json'
+path_to_annotations_tomato = '/.../Annotations_with_tomato.txt'
+
 # Reading of annotation and annotation_tomato files
 
 with open(path_to_annotations) as json_file:
@@ -28,7 +41,9 @@ with open(path_to_annotations) as json_file:
 f = open(path_to_annotations_tomato, 'r')
 annotations_tomato = f.read()
 annotations_tomato = annotations_tomato.split('\n')
+```
 
+```python
 # Creation of the labels dictionnary {image_ID : 0 or 1}
 # 0 if the image does not have any tomato annotation
 # 1 if the image contain at least 1 annoation with tomato
