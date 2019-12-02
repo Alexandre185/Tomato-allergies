@@ -11,6 +11,8 @@ The 3 files/directories needed to run the code are:
 
 ### Packages
 
+The following packages are necessary to run the code:
+
 ```python
 import json
 import os
@@ -75,16 +77,32 @@ labels = pd.get_dummies(labels).values
 
 ## Images Pre Processing 
 
+Out of the 3000 images, 13 are not shaped as `600*600*3` : 10 are 600*601, 1 is 600*654, 1 is 600*664, 1 is 986*600.
+For simplicity, all the images are reshaped to the same shape.
+However the shape was set to `224*224*3` and not `600*600*3` because:
+- `224*224*3` is the image shape adapted to the model that will be used
+- the RAM offered by colab is not sufficient to handle 3000 `600*600*3` images
+
 ```python
-img_dim = 299 # Dimension we want to resize the image to (image is 600*600 initially)
-# Reshape of the 13 images that are not 600*600 ( 10 are 600*601, 1 is 600*654, 1 is 600*664, 1 is 986*600)
+img_dim = 224
+
 for i in range(len(images)):
     if images[i].shape != (img_dim, img_dim, 3):
         images[i] = cv2.resize(images[i],(img_dim, img_dim))
 ```
 
+Once the images reshaped, their values were normalized between O and 1:
+
 ```python
 images = np.array(images, dtype="float") / 255.0  # not enough RAM with colab
 
 ```
+## Model
 
+## Model Training
+
+## Plots of Training and Test Accuracy
+
+## Checkpoint Release
+
+## Credits
