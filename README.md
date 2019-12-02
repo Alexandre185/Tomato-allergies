@@ -43,8 +43,8 @@ annotations_tomato = annotations_tomato.split('\n')
 ```
 
 The labels were created as follows:
-    - 0 if the image does not have any tomato annotation (if none of its bounding boxes annotated ID can be found in the `Annotations_with_tomato.txt` list)
-    - 1 if the image contain at least 1 annoation with tomato (if at least one bounding box annotated ID can be found in the `Annotations_with_tomato.txt` list)
+- 0 if the image does not have any tomato annotation (if none of its bounding boxes annotated ID can be found in the `Annotations_with_tomato.txt` list)
+- 1 if the image contain at least 1 annoation with tomato (if at least one bounding box annotated ID can be found in the `Annotations_with_tomato.txt` list)
 
 ```python
 labels_dict =  {}
@@ -54,9 +54,9 @@ for i in range(len(annotations)):
         if bbox['id'] in annotations_tomato:
             labels_dict[list(annotations.items())[i][0]] = 1
 ```
-This resulted in having: \\
-    - 2121 images labeled as 0: without any tomato trace
-    - 879 images labeled as 1: that main contain tomato traces
+This resulted in having: 
+- 2121 images labeled as 0: without any tomato trace
+- 879 images labeled as 1: that main contain tomato traces
 
 The images and the labels were then put in corresponding lists of length 3000:
 ```python
