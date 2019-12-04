@@ -195,6 +195,8 @@ epochs=epochs, verbose=2, callbacks=callbacks)
 
 model.evaluate(X_test, y_test)
 ```
+Because of time constraint, I did not perform cross validation and directly used the results from a training on 1 split of the dataset.
+
 ## Plots of Training and Test Accuracy
 
 ![Model trained with transfer learning](Transfer_learning.png)
