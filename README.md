@@ -30,6 +30,7 @@ from keras.callbacks import ModelCheckpoint
 from keras.applications import VGG16
 from keras.models import Sequential
 from keras.layers import Dense, Dropout, GlobalAveragePooling2D,Flatten, Conv2D, MaxPooling2D, Activation, Add
+from matplotlib import pyplot as plt
 ```
 
 ## Annotations_with_tomato.txt file
