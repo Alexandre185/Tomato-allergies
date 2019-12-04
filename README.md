@@ -191,7 +191,7 @@ model.evaluate(X_test, y_test)
 ```
 ## Plots of Training and Test Accuracy
 
-![Model trained with transfer learning]
+![Model trained with transfer learning](static/images/Transfer_learning.png)
 
 ## Checkpoint Release
 ```python
