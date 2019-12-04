@@ -202,12 +202,10 @@ Because of time constraint, I did not perform cross validation and directly used
 ![Model trained with transfer learning](Transfer_learning.png)
 
 ## Checkpoint Release
-```python
-callbacks = [ModelCheckpoint("/content/val_acc/val_acc-{epoch:02d}-{val_acc:.2f}.hdf5", monitor='val_acc'),
-             ModelCheckpoint("/content/val_loss/val_loss-{epoch:02d}-{val_loss:.2f}.hdf5", monitor='val_loss'),
-			 ModelCheckpoint("/content/acc/acc-{epoch:02d}-{acc:.2f}.hdf5", monitor='acc'),
-             ModelCheckpoint("/content/loss/loss-{epoch:02d}-{loss:.2f}.hdf5", monitor='loss')]
-```
+
+Please find the release containing the checkpoints for both trained models here :
+[release](https://https://github.com/Alexandre185/Tomato-allergies/releases/tag/)
+
 ## Credits
 
 https://blog.keras.io/building-powerful-image-classification-models-using-very-little-data.html
