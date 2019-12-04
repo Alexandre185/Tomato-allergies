@@ -1,5 +1,7 @@
 # Tomato-allergies
 
+The full code is available in the file `code.py`
+
 ## Requirements
 
 ### Files
