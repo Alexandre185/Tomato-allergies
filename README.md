@@ -130,16 +130,20 @@ opt = Adam(lr = 0.00001)
 
 The transfer learning was realized using the model VGG16 trained on the ImageNet dataset. The trained weights are frozen up to the last convolutional block. At the end of the network, a classifier adapted to this problem was added. This classifier was first pre trained using bottleneck features from the VGG16 model.
 
+
+Use of bottleneck features from the VGG16 model:
 ```python
 model_vgg16 = VGG16(include_top=False, weights='imagenet', input_shape=X_train.shape[1:])
 
 train_data = model_vgg16.predict(X_train, len(X_train) // batch_size) 
 test_data = model_vgg16.predict(X_test, len(X_test) // batch_size)
 ```
+
+Creation of the binary classifier adapted to the task:
 ```python
 def classifier(input_shape):
     model = Sequential()
-    model.add(Flatten(input_shape=train_data.shape[1:]))
+    model.add(Flatten(input_shape=input_shape))
     model.add(Dense(512, activation='relu'))
     model.add(Dropout(0.5))
     model.add(Dense(512, activation='relu'))
@@ -147,18 +151,20 @@ def classifier(input_shape):
     model.add(Dense(2, activation='sigmoid'))
     return model
 ```
-```python
 
-model_classifier = classifier()
+Pretraining of the classifier with the bottleneck features and 50 epochs.
+```python
+model_classifier = classifier(train_data.shape[1:])
 model_classifier.compile(optimizer=opt, loss='binary_crossentropy', metrics=['accuracy'])
-model_classifier.fit(train_data, y_train, epochs=epochs, batch_size=batch_size,
+model_classifier.fit(train_data, y_train, epochs=50, batch_size=batch_size,
             validation_data=(test_data, y_test))
 ```
 The weights of the classifier were then saved:
 ```python
 model_classifier.save_weights('fc_model.h5')
-
 ```
+
+The final model consists in the VVG16 model with its 15 first layers frozen and the pretrained classifier added after:
 ```python
 model = Sequential()
 
