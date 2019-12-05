@@ -236,12 +236,9 @@ The model trained from scratch was trained with 100 epochs and validation accura
 The model with transfer learning was trained with 20 epochs and validation accuracy reached 0.77 (if sigmoid is used instead of softmax and binary cross-entropy instead of categorical cross-entropy, the validation accuracy reaches 0.95, however I think it is incorrect with one hot encoded labels).  
 
 ```python
-
 H = model.fit_generator(datagen.flow(X_train, y_train, batch_size=batch_size),
 steps_per_epoch=len(X_train) // batch_size, validation_data=(X_test, y_test),
 epochs=epochs, verbose=2, callbacks=callbacks)
-
-model.evaluate(X_test, y_test)
 ```
 Because of time constraint, I did not perform cross validation and directly used the results from a training on 1 split of the dataset.
 
