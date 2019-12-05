@@ -13,7 +13,7 @@ The 3 files/directories needed to run the code are:
 
 ### Packages
 
-The project was realized using Keras with Tensorflow as backend.
+The project was realized using Tensorflow with Keras.
 
 The following packages are necessary to run the code:
 
