@@ -5,7 +5,7 @@ path_to_annotations = '/content/drive/My Drive/img_annotations.json' # json anno
 # Text file manually created from the excel table with all the bounding boxes IDs of aliments that may contain tomatoes
 path_to_annotations_tomato = '/content/Annotations_with_tomato.txt'
 
-model_choice = 'transfer' # (either 'scratch or 'transfer')
+model_choice = 'transfer' # (either 'scratch' or 'transfer')
 
 img_dim = 350 # Dimension we want to resize the image to (image is 600*600 initially)
 epochs = 20 # Number of epochs we want to train the model with 
