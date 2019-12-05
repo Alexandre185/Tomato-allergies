@@ -233,7 +233,7 @@ For the training, the loss function used was the "categorical cross-entropy" as 
 
 The model trained from scratch was trained with 100 epochs and validation accuracy reached 0.73.
 
-The model with transfer learning was trained with 20 epochs and validation accuracy reached 0.77 (if sigmoid is used instead of softmax and binary cross-entropy instead of categorical cross-entropy, the validation accuracy reaches 0.95, however I think it is incorrect with one hot encoded labels).  
+The model with transfer learning was trained with 20 epochs and validation accuracy reached 0.80 (if sigmoid is used instead of softmax and binary cross-entropy instead of categorical cross-entropy, the validation accuracy reaches 0.95, however I think it is incorrect with one hot encoded labels).  
 
 ```python
 H = model.fit_generator(datagen.flow(X_train, y_train, batch_size=batch_size),
