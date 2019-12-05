@@ -15,6 +15,11 @@ The 3 files/directories needed to run the code are:
 
 The project was realized using Tensorflow with Keras.
 
+```python
+pip install tensorflow
+pip install keras
+```
+
 The following packages are necessary to run the code:
 
 ```python
