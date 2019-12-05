@@ -29,7 +29,7 @@ from keras.optimizers import Adam
 from keras.callbacks import ModelCheckpoint
 from keras.applications import VGG16
 from keras.models import Sequential
-from keras.layers import Dense, Dropout, GlobalAveragePooling2D,Flatten, Conv2D, MaxPooling2D, Activation, Add
+from keras.layers import Dense, Dropout,Flatten, Conv2D, MaxPooling2D, Activation, Add
 from matplotlib import pyplot as plt
 ```
 
@@ -107,7 +107,7 @@ Once the images reshaped, their values were normalized between 0 and 1:
 images = np.array(images, dtype="float") / 255.0  
 ```
 
-The data was then split into training and test sets: 
+The data was then split into training and test sets: (since you asked for test accuracy plot, I assumed there was no validation set) 
 ```python
 X_train, X_test, y_train, y_test = train_test_split(images, labels, test_size=0.2)
 ```
@@ -118,15 +118,11 @@ datagen = ImageDataGenerator(rotation_range=40, width_shift_range=0.2,height_shi
 datagen.fit(X_train)
 ```
 
-## Model
+## Models
 
 2 models were implemented:
 - One trained from scratch
 - One involving transfer learning
-
-### Model from scratch
-
-### Model with transfer learning
 
 Three hyperparameters were partially optimized:
 - the optimizer between RMSprop, SGD, Adam and Adamax
@@ -135,8 +131,48 @@ Three hyperparameters were partially optimized:
 
 ```python
 batch_size = 64
-opt = Adam(lr = 0.00001)
+learning_rate = 0.00001
+opt = Adam(lr=learning_rate, decay=learning_rate / 10)
 ```
+
+### Model from scratch
+
+This model is a CNN with 8 convolutionals layers inspired from the repository mentionned in the credits:
+
+```python
+model = Sequential()
+
+model.add(Conv2D(32,  (3, 3), padding='same', input_shape=input_shape, activation='relu'))
+model.add(Conv2D(32, (3, 3), padding='same', activation='relu'))
+model.add(MaxPooling2D(pool_size=(2, 2)))
+
+model.add(Conv2D(64, (3, 3), padding='same', activation='relu'))
+model.add(Dropout(0.2))
+model.add(Conv2D(64, (3, 3), padding='same', activation='relu'))
+model.add(MaxPooling2D(pool_size=(2, 2)))
+
+model.add(Conv2D(128, (3, 3), padding='same', activation='relu'))
+model.add(Dropout(0.2))
+model.add(Conv2D(128, (3, 3), padding='same', activation='relu'))
+model.add(MaxPooling2D(pool_size=(2, 2)))
+
+model.add(Conv2D(256, (3, 3), padding='same', activation='relu'))
+model.add(Dropout(0.2))
+model.add(Conv2D(256, (3, 3), padding='same', activation='relu'))
+model.add(MaxPooling2D(pool_size=(2, 2)))
+
+model.add(Flatten())
+model.add(Dense(512, activation='relu'))
+model.add(Dropout(0.5))
+
+model.add(Dense(512, activation='relu'))
+model.add(Dropout(0.5))
+
+model.add(Dense(2))
+model.add(Activation('softmax'))
+```
+
+### Model with transfer learning
 
 The transfer learning was realized using the model VGG16 trained on the ImageNet dataset. The trained weights are frozen up to the last convolutional block. At the end of the network, a classifier adapted to this problem was added. This classifier was first pre trained using bottleneck features from the VGG16 model.
 
@@ -181,7 +217,7 @@ model = Sequential()
 model.add(VGG16(weights='imagenet', include_top=False, input_shape = X_train.shape[1:]))
 
 top_model = classifier(model.output_shape[1:])
-top_model.load_weights('/content/fc_model.h5')
+top_model.load_weights('fc_model.h5')
 
 model.add(top_model)
 
@@ -193,9 +229,11 @@ model.compile(loss='binary_crossentropy', optimizer=opt, metrics=['accuracy'])
 
 ## Model Training
 
-The model was trained with 20 epochs. With this model I managed to have the requested 0.95 of validation accuracy. However:
-- the validation accuracy does not change at all for any epoch (something wrong there)
-- the training accuracy is significantly lower (around 0.76) with the training loss being also way bigger than the validation loss: underfitting issue.
+For the training, the loss function used was the "categorical cross-entropy" as I chose to use a softmax final activation function and one hot encoded labels.
+
+The model trained from scratch was trained with 100 epochs and validation accuracy reached 0.71.
+
+The model with transfer learning was trained with 20 epochs and validation accuracy reached 0.77 (if sigmoid is used instead of softmax and binary cross-entropy instead of categorical cross-entropy, the validation accuracy reaches 0.95, however I think it is incorrect with one hot encoded labels).  
 
 ```python
 
@@ -219,5 +257,7 @@ Please find the release containing the checkpoints for both trained models here 
 ## Credits
 
 https://blog.keras.io/building-powerful-image-classification-models-using-very-little-data.html
-
 (for the use of the bottleneck features and the pretraining of the classifier)
+
+https://github.com/gsurma/image_classifier/blob/master/image_classifier.ipynb
+(for the model trained from scratch)
