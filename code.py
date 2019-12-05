@@ -168,8 +168,6 @@ H = model.fit_generator(datagen.flow(X_train, y_train, batch_size=batch_size),
 steps_per_epoch=len(X_train) // batch_size, validation_data=(X_test, y_test),
 epochs=epochs, verbose=0, callbacks=callbacks)
 
-model.evaluate(X_test, y_test)
-
 # Plots of the training and test accuracy
 plt.plot(H.history['acc'])
 plt.plot(H.history['val_acc'])
