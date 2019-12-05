@@ -10,10 +10,6 @@ model_choice = 'transfer' # (either 'scratch' or 'transfer')
 img_dim = 350 # Dimension we want to resize the image to (image is 600*600 initially)
 epochs = 20 # Number of epochs we want to train the model with 
 
-# Tensorflow has a lot of warning regarding deprecated expressions
-import warnings
-warnings.filterwarnings('ignore')
-
 # Packages 
 import json
 import os
