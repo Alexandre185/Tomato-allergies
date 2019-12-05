@@ -5,6 +5,8 @@ path_to_annotations = '/content/drive/My Drive/img_annotations.json' # json anno
 # Text file manually created from the excel table with all the bounding boxes IDs of aliments that may contain tomatoes
 path_to_annotations_tomato = '/content/Annotations_with_tomato.txt'
 
+model_choice = 'transfer' # (either 'scratch or 'transfer')
+
 img_dim = 350 # Dimension we want to resize the image to (image is 600*600 initially)
 epochs = 20 # Number of epochs we want to train the model with 
 
@@ -152,8 +154,10 @@ def model_transfer(X_train, X_test, y_train, y_test, path_classifier_weights = '
 	return model
 
 # Choice of the model
-#model = model_scratch(X_train.shape[1:])
-model = model_transfer(X_train, X_test, y_train, y_test,'fc_model.h5')
+if model_choice = 'scratch':
+	model = model_scratch(X_train.shape[1:])
+if model_choice = 'transfer':
+	model = model_transfer(X_train, X_test, y_train, y_test,'fc_model.h5')
 
 # Model compilation and checkpoint creation
 model.compile(loss='categorical_crossentropy', optimizer=opt, metrics=['accuracy'])
