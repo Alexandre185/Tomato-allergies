@@ -231,7 +231,7 @@ model.compile(loss='binary_crossentropy', optimizer=opt, metrics=['accuracy'])
 
 For the training, the loss function used was the "categorical cross-entropy" as I chose to use a softmax final activation function and one hot encoded labels.
 
-The model trained from scratch was trained with 100 epochs and validation accuracy reached 0.71.
+The model trained from scratch was trained with 100 epochs and validation accuracy reached 0.73.
 
 The model with transfer learning was trained with 20 epochs and validation accuracy reached 0.77 (if sigmoid is used instead of softmax and binary cross-entropy instead of categorical cross-entropy, the validation accuracy reaches 0.95, however I think it is incorrect with one hot encoded labels).  
 
