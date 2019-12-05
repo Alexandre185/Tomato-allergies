@@ -250,7 +250,7 @@ Because of time constraint, I did not perform cross validation and directly used
 ## Checkpoint Release
 
 Please find the release containing the checkpoints for both trained models here :
-[release](https://https://github.com/Alexandre185/Tomato-allergies/releases/tag/Checkpoints)
+[release](https://github.com/Alexandre185/Tomato-allergies/releases/tag/Checkpoints)
 
 ## Credits
 
