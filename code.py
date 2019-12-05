@@ -154,9 +154,9 @@ def model_transfer(X_train, X_test, y_train, y_test, path_classifier_weights = '
 	return model
 
 # Choice of the model
-if model_choice = 'scratch':
+if model_choice == 'scratch':
 	model = model_scratch(X_train.shape[1:])
-if model_choice = 'transfer':
+if model_choice == 'transfer':
 	model = model_transfer(X_train, X_test, y_train, y_test,'fc_model.h5')
 
 # Model compilation and checkpoint creation
