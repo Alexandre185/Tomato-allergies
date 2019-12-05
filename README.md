@@ -244,12 +244,13 @@ Because of time constraint, I did not perform cross validation and directly used
 
 ## Plots of Training and Test Accuracy
 
+![Model trained from scratch](Plot_scratch.png)
 ![Model trained with transfer learning](Plot_transfer.png)
 
 ## Checkpoint Release
 
 Please find the release containing the checkpoints for both trained models here :
-[release](https://https://github.com/Alexandre185/Tomato-allergies/releases/tag/)
+[release](https://https://github.com/Alexandre185/Tomato-allergies/releases/tag/Checkpoints)
 
 ## Credits
 
