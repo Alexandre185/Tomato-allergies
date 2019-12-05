@@ -244,7 +244,7 @@ Because of time constraint, I did not perform cross validation and directly used
 
 ## Plots of Training and Test Accuracy
 
-![Model trained with transfer learning](Transfer_learning.png)
+![Model trained with transfer learning]()
 
 ## Checkpoint Release
 
