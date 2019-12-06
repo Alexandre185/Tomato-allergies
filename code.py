@@ -175,3 +175,15 @@ plt.xlabel('epoch')
 plt.legend(['train', 'test'], loc='center left')
 plt.savefig('Transfer_learning.png')
 plt.show()
+
+# has_tomatoes() prediction function
+def has_tomatoes(image_path):
+    im = cv2.imread(image_path)
+    im = cv2.resize(im,(350, 350))
+    IM = np.zeros((1,im.shape[0],im.shape[1],im.shape[2]))
+    IM[0] = im
+    pred = model.predict(IM)
+    if pred[0,0] > pred[0,1]:
+        return False
+    else:
+        return True
