@@ -252,6 +252,21 @@ Because of time constraint, I did not perform cross validation and directly used
 ![Model trained from scratch](Plot_scratch.png)
 ![Model trained with transfer learning](Plot_transfer_20.png)
 
+## has_tomatoes() prediction function
+
+```python
+def has_tomatoes(image_path):
+    im = cv2.imread(image_path)
+    im = cv2.resize(im,(350, 350))
+    IM = np.zeros((1,im.shape[0],im.shape[1],im.shape[2]))
+    IM[0] = im
+    pred = model.predict(IM)
+    if pred[0,0] > pred[0,1]:
+        return False
+    else:
+        return True
+```
+
 ## Checkpoint Release
 
 Please find the release containing the checkpoints for both trained models here :
