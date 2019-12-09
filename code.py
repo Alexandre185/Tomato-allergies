@@ -177,7 +177,7 @@ plt.savefig('Transfer_learning.png')
 plt.show()
 
 # has_tomatoes() prediction function
-def has_tomatoes(image_path, checkpoint_path, model_choice):
+def has_tomatoes(image_path, checkpoint_path, classifier_weights_path, model_choice):
 
     # Image loading
     im = cv2.imread(image_path)
@@ -185,8 +185,8 @@ def has_tomatoes(image_path, checkpoint_path, model_choice):
     IM = np.zeros((1,im.shape[0],im.shape[1],im.shape[2]))
     IM[0] = im
 
-    # Transfer model
-    def model_transfer_2(path_classifier_weights = 'fc_model.h5'):
+    # Transfer model 
+    def model_transfer_2(path_classifier_weights):
 
         def classifier(input_shape_2):
             model = Sequential()
@@ -201,7 +201,7 @@ def has_tomatoes(image_path, checkpoint_path, model_choice):
         model = Sequential()
         model.add(VGG16(weights='imagenet', include_top=False, input_shape=im.shape))
         top_model = classifier(model.output_shape[1:])
-        top_model.load_weights(path_classifier_weights)
+        top_model.load_weights(classifier_weights_path)
         model.add(top_model)
         for layer in model.layers[:15]:
             layer.trainable = False
@@ -212,7 +212,7 @@ def has_tomatoes(image_path, checkpoint_path, model_choice):
     if model_choice == 'scratch':
 	    model = model_scratch(im.shape)
     if model_choice == 'transfer':
-	    model = model_transfer_2('fc_model.h5')
+	    model = model_transfer_2(classifier_weights_path)
      
     # Model compilation and weights loading
     model.compile(loss='categorical_crossentropy', optimizer=opt, metrics=['accuracy'])
