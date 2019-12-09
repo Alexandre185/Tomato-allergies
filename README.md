@@ -255,11 +255,48 @@ Because of time constraint, I did not perform cross validation and directly used
 ## has_tomatoes() prediction function
 
 ```python
-def has_tomatoes(image_path):
+def has_tomatoes(image_path, checkpoint_path, model_choice):
+
+    # Image loading
     im = cv2.imread(image_path)
     im = cv2.resize(im,(350, 350))
     IM = np.zeros((1,im.shape[0],im.shape[1],im.shape[2]))
     IM[0] = im
+
+    # Transfer model
+    def model_transfer_2(path_classifier_weights = 'fc_model.h5'):
+
+        def classifier(input_shape_2):
+            model = Sequential()
+            model.add(Flatten(input_shape=input_shape_2))
+            model.add(Dense(512, activation='relu'))
+            model.add(Dropout(0.5))
+            model.add(Dense(512, activation='relu'))
+            model.add(Dropout(0.5))
+            model.add(Dense(2, activation='softmax'))
+            return model
+
+        model = Sequential()
+        model.add(VGG16(weights='imagenet', include_top=False, input_shape=im.shape))
+        top_model = classifier(model.output_shape[1:])
+        top_model.load_weights(path_classifier_weights)
+        model.add(top_model)
+        for layer in model.layers[:15]:
+            layer.trainable = False
+        
+        return model
+
+    # Model Choice
+    if model_choice == 'scratch':
+	    model = model_scratch(im.shape)
+    if model_choice == 'transfer':
+	    model = model_transfer_2('fc_model.h5')
+     
+    # Model compilation and weights loading
+    model.compile(loss='categorical_crossentropy', optimizer=opt, metrics=['accuracy'])
+    model.load_weights(checkpoint_path)
+
+    # Prediction
     pred = model.predict(IM)
     if pred[0,0] > pred[0,1]:
         return False
